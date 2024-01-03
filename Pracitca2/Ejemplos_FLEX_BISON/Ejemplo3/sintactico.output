@@ -1,0 +1,248 @@
+Gramática
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input line
+
+    3 line: '\n'
+    4     | exp '\n'
+
+    5 exp: TOKEN_NUM
+    6    | exp '+' exp
+    7    | exp '-' exp
+    8    | exp '*' exp
+    9    | exp '/' exp
+   10    | SENO PI exp PD
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    '\n' (10) 3 4
+    '*' (42) 8
+    '+' (43) 6
+    '-' (45) 7
+    '/' (47) 9
+    error (256)
+    TOKEN_NUM <real> (258) 5
+    SENO (259) 10
+    PI (260) 10
+    PD (261) 10
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (12)
+        on left: 0
+    input (13)
+        on left: 1 2
+        on right: 0 2
+    line (14)
+        on left: 3 4
+        on right: 2
+    exp <real> (15)
+        on left: 5 6 7 8 9 10
+        on right: 4 6 7 8 9 10
+
+
+Estado 0
+
+    0 $accept: . input $end
+
+    $default  reduce usando la regla 1 (input)
+
+    input  ir al estado 1
+
+
+Estado 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end       desplazar e ir al estado 2
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+    '\n'       desplazar e ir al estado 5
+
+    line  ir al estado 6
+    exp   ir al estado 7
+
+
+Estado 2
+
+    0 $accept: input $end .
+
+    $default  aceptar
+
+
+Estado 3
+
+    5 exp: TOKEN_NUM .
+
+    $default  reduce usando la regla 5 (exp)
+
+
+Estado 4
+
+   10 exp: SENO . PI exp PD
+
+    PI  desplazar e ir al estado 8
+
+
+Estado 5
+
+    3 line: '\n' .
+
+    $default  reduce usando la regla 3 (line)
+
+
+Estado 6
+
+    2 input: input line .
+
+    $default  reduce usando la regla 2 (input)
+
+
+Estado 7
+
+    4 line: exp . '\n'
+    6 exp: exp . '+' exp
+    7    | exp . '-' exp
+    8    | exp . '*' exp
+    9    | exp . '/' exp
+
+    '-'   desplazar e ir al estado 9
+    '+'   desplazar e ir al estado 10
+    '*'   desplazar e ir al estado 11
+    '/'   desplazar e ir al estado 12
+    '\n'  desplazar e ir al estado 13
+
+
+Estado 8
+
+   10 exp: SENO PI . exp PD
+
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+
+    exp  ir al estado 14
+
+
+Estado 9
+
+    7 exp: exp '-' . exp
+
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+
+    exp  ir al estado 15
+
+
+Estado 10
+
+    6 exp: exp '+' . exp
+
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+
+    exp  ir al estado 16
+
+
+Estado 11
+
+    8 exp: exp '*' . exp
+
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+
+    exp  ir al estado 17
+
+
+Estado 12
+
+    9 exp: exp '/' . exp
+
+    TOKEN_NUM  desplazar e ir al estado 3
+    SENO       desplazar e ir al estado 4
+
+    exp  ir al estado 18
+
+
+Estado 13
+
+    4 line: exp '\n' .
+
+    $default  reduce usando la regla 4 (line)
+
+
+Estado 14
+
+    6 exp: exp . '+' exp
+    7    | exp . '-' exp
+    8    | exp . '*' exp
+    9    | exp . '/' exp
+   10    | SENO PI exp . PD
+
+    PD   desplazar e ir al estado 19
+    '-'  desplazar e ir al estado 9
+    '+'  desplazar e ir al estado 10
+    '*'  desplazar e ir al estado 11
+    '/'  desplazar e ir al estado 12
+
+
+Estado 15
+
+    6 exp: exp . '+' exp
+    7    | exp . '-' exp
+    7    | exp '-' exp .
+    8    | exp . '*' exp
+    9    | exp . '/' exp
+
+    '*'  desplazar e ir al estado 11
+    '/'  desplazar e ir al estado 12
+
+    $default  reduce usando la regla 7 (exp)
+
+
+Estado 16
+
+    6 exp: exp . '+' exp
+    6    | exp '+' exp .
+    7    | exp . '-' exp
+    8    | exp . '*' exp
+    9    | exp . '/' exp
+
+    '*'  desplazar e ir al estado 11
+    '/'  desplazar e ir al estado 12
+
+    $default  reduce usando la regla 6 (exp)
+
+
+Estado 17
+
+    6 exp: exp . '+' exp
+    7    | exp . '-' exp
+    8    | exp . '*' exp
+    8    | exp '*' exp .
+    9    | exp . '/' exp
+
+    $default  reduce usando la regla 8 (exp)
+
+
+Estado 18
+
+    6 exp: exp . '+' exp
+    7    | exp . '-' exp
+    8    | exp . '*' exp
+    9    | exp . '/' exp
+    9    | exp '/' exp .
+
+    $default  reduce usando la regla 9 (exp)
+
+
+Estado 19
+
+   10 exp: SENO PI exp PD .
+
+    $default  reduce usando la regla 10 (exp)

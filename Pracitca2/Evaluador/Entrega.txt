@@ -1,0 +1,9 @@
+No veo en ningún sitio nada sobre si necesitas un guión pero ejectuando el script .sh se comprueba como este conjunto Flex/Bison analiza programas del estilo 
+siendo
+x =1
+y = 2.6
+z = 2E6
+
+evalua 
+
+x + y * z

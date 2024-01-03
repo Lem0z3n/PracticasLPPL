@@ -1,0 +1,368 @@
+Gramática
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input S
+
+    3 S: exp '\n'
+    4  | ID ASIG exp PC '\n'
+    5  | ME ID Coma ID MA ASIG ME exp Coma exp MA PC '\n'
+
+    6 exp: exp MAS term
+    7    | term
+
+    8 term: term MULT factor
+    9     | factor
+
+   10 factor: PI exp PD
+   11       | ID
+   12       | NUM
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    '\n' (10) 3 4 5
+    error (256)
+    ID (258) 4 5 11
+    ASIG (259) 4 5
+    NUM (260) 12
+    MAS (261) 6
+    MULT (262) 8
+    PI (263) 10
+    PD (264) 10
+    PC (265) 4 5
+    ME (266) 5
+    MA (267) 5
+    Coma (268) 5
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (15)
+        on left: 0
+    input (16)
+        on left: 1 2
+        on right: 0 2
+    S (17)
+        on left: 3 4 5
+        on right: 2
+    exp (18)
+        on left: 6 7
+        on right: 3 4 5 6 10
+    term (19)
+        on left: 8 9
+        on right: 6 7 8
+    factor (20)
+        on left: 10 11 12
+        on right: 8 9
+
+
+Estado 0
+
+    0 $accept: . input $end
+
+    $default  reduce usando la regla 1 (input)
+
+    input  ir al estado 1
+
+
+Estado 1
+
+    0 $accept: input . $end
+    2 input: input . S
+
+    $end  desplazar e ir al estado 2
+    ID    desplazar e ir al estado 3
+    NUM   desplazar e ir al estado 4
+    PI    desplazar e ir al estado 5
+    ME    desplazar e ir al estado 6
+
+    S       ir al estado 7
+    exp     ir al estado 8
+    term    ir al estado 9
+    factor  ir al estado 10
+
+
+Estado 2
+
+    0 $accept: input $end .
+
+    $default  aceptar
+
+
+Estado 3
+
+    4 S: ID . ASIG exp PC '\n'
+   11 factor: ID .
+
+    ASIG  desplazar e ir al estado 11
+
+    $default  reduce usando la regla 11 (factor)
+
+
+Estado 4
+
+   12 factor: NUM .
+
+    $default  reduce usando la regla 12 (factor)
+
+
+Estado 5
+
+   10 factor: PI . exp PD
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    exp     ir al estado 13
+    term    ir al estado 9
+    factor  ir al estado 10
+
+
+Estado 6
+
+    5 S: ME . ID Coma ID MA ASIG ME exp Coma exp MA PC '\n'
+
+    ID  desplazar e ir al estado 14
+
+
+Estado 7
+
+    2 input: input S .
+
+    $default  reduce usando la regla 2 (input)
+
+
+Estado 8
+
+    3 S: exp . '\n'
+    6 exp: exp . MAS term
+
+    MAS   desplazar e ir al estado 15
+    '\n'  desplazar e ir al estado 16
+
+
+Estado 9
+
+    7 exp: term .
+    8 term: term . MULT factor
+
+    MULT  desplazar e ir al estado 17
+
+    $default  reduce usando la regla 7 (exp)
+
+
+Estado 10
+
+    9 term: factor .
+
+    $default  reduce usando la regla 9 (term)
+
+
+Estado 11
+
+    4 S: ID ASIG . exp PC '\n'
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    exp     ir al estado 18
+    term    ir al estado 9
+    factor  ir al estado 10
+
+
+Estado 12
+
+   11 factor: ID .
+
+    $default  reduce usando la regla 11 (factor)
+
+
+Estado 13
+
+    6 exp: exp . MAS term
+   10 factor: PI exp . PD
+
+    MAS  desplazar e ir al estado 15
+    PD   desplazar e ir al estado 19
+
+
+Estado 14
+
+    5 S: ME ID . Coma ID MA ASIG ME exp Coma exp MA PC '\n'
+
+    Coma  desplazar e ir al estado 20
+
+
+Estado 15
+
+    6 exp: exp MAS . term
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    term    ir al estado 21
+    factor  ir al estado 10
+
+
+Estado 16
+
+    3 S: exp '\n' .
+
+    $default  reduce usando la regla 3 (S)
+
+
+Estado 17
+
+    8 term: term MULT . factor
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    factor  ir al estado 22
+
+
+Estado 18
+
+    4 S: ID ASIG exp . PC '\n'
+    6 exp: exp . MAS term
+
+    MAS  desplazar e ir al estado 15
+    PC   desplazar e ir al estado 23
+
+
+Estado 19
+
+   10 factor: PI exp PD .
+
+    $default  reduce usando la regla 10 (factor)
+
+
+Estado 20
+
+    5 S: ME ID Coma . ID MA ASIG ME exp Coma exp MA PC '\n'
+
+    ID  desplazar e ir al estado 24
+
+
+Estado 21
+
+    6 exp: exp MAS term .
+    8 term: term . MULT factor
+
+    MULT  desplazar e ir al estado 17
+
+    $default  reduce usando la regla 6 (exp)
+
+
+Estado 22
+
+    8 term: term MULT factor .
+
+    $default  reduce usando la regla 8 (term)
+
+
+Estado 23
+
+    4 S: ID ASIG exp PC . '\n'
+
+    '\n'  desplazar e ir al estado 25
+
+
+Estado 24
+
+    5 S: ME ID Coma ID . MA ASIG ME exp Coma exp MA PC '\n'
+
+    MA  desplazar e ir al estado 26
+
+
+Estado 25
+
+    4 S: ID ASIG exp PC '\n' .
+
+    $default  reduce usando la regla 4 (S)
+
+
+Estado 26
+
+    5 S: ME ID Coma ID MA . ASIG ME exp Coma exp MA PC '\n'
+
+    ASIG  desplazar e ir al estado 27
+
+
+Estado 27
+
+    5 S: ME ID Coma ID MA ASIG . ME exp Coma exp MA PC '\n'
+
+    ME  desplazar e ir al estado 28
+
+
+Estado 28
+
+    5 S: ME ID Coma ID MA ASIG ME . exp Coma exp MA PC '\n'
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    exp     ir al estado 29
+    term    ir al estado 9
+    factor  ir al estado 10
+
+
+Estado 29
+
+    5 S: ME ID Coma ID MA ASIG ME exp . Coma exp MA PC '\n'
+    6 exp: exp . MAS term
+
+    MAS   desplazar e ir al estado 15
+    Coma  desplazar e ir al estado 30
+
+
+Estado 30
+
+    5 S: ME ID Coma ID MA ASIG ME exp Coma . exp MA PC '\n'
+
+    ID   desplazar e ir al estado 12
+    NUM  desplazar e ir al estado 4
+    PI   desplazar e ir al estado 5
+
+    exp     ir al estado 31
+    term    ir al estado 9
+    factor  ir al estado 10
+
+
+Estado 31
+
+    5 S: ME ID Coma ID MA ASIG ME exp Coma exp . MA PC '\n'
+    6 exp: exp . MAS term
+
+    MAS  desplazar e ir al estado 15
+    MA   desplazar e ir al estado 32
+
+
+Estado 32
+
+    5 S: ME ID Coma ID MA ASIG ME exp Coma exp MA . PC '\n'
+
+    PC  desplazar e ir al estado 33
+
+
+Estado 33
+
+    5 S: ME ID Coma ID MA ASIG ME exp Coma exp MA PC . '\n'
+
+    '\n'  desplazar e ir al estado 34
+
+
+Estado 34
+
+    5 S: ME ID Coma ID MA ASIG ME exp Coma exp MA PC '\n' .
+
+    $default  reduce usando la regla 5 (S)

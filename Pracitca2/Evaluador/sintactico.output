@@ -1,0 +1,951 @@
+Gramática
+
+    0 $accept: S $end
+
+    1 S: EVALUA E0 PTOCOMA
+    2  | SIENDO LDs EVALUA E0
+    3  | EVALUA IF_ST PTOCOMA
+    4  | SIENDO LDs EVALUA IF_ST
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF PA COND PA THEN PCA E0 PCC
+
+    7 LDs: LDs COMA D
+    8    | D
+
+    9 $@1: %empty
+
+   10 D: ID $@1 ASIG E0
+
+   11 $@2: %empty
+
+   12 $@3: %empty
+
+   13 $@4: %empty
+
+   14 $@5: %empty
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+   16 COND: E0 LTE E0
+   17     | E0 GTE E0
+   18     | E0 EQ E0
+   19     | E0 DIF E0
+   20     | E0 GT E0
+   21     | E0 LT E0
+   22     | E0
+
+   23 E0: E0 MAS E1
+   24   | E0 MENOS E1
+   25   | E1
+
+   26 E1: E1 MULT E2
+   27   | E1 DIV E2
+   28   | E2
+
+   29 E2: INT
+   30   | REAL
+   31   | EXP
+   32   | ID
+   33   | PA E0 PC
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    error (256)
+    INT <valor> (258) 29
+    REAL <valor> (259) 30
+    EXP <valor> (260) 31
+    ASIG (261) 10 15
+    COMA (262) 7 15
+    PTOCOMA (263) 1 3
+    MAS (264) 23
+    MENOS (265) 24
+    MULT (266) 26
+    DIV (267) 27
+    PA (268) 5 6 33
+    PC (269) 33
+    LT (270) 15 21
+    GT (271) 15 20
+    LTE (272) 16
+    GTE (273) 17
+    EQ (274) 18
+    DIF (275) 19
+    PCA (276) 5 6
+    PCC (277) 5 6
+    IF (278) 5 6
+    THEN (279) 5 6
+    ELSE (280) 5
+    ID <nombre> (281) 10 15 32
+    EVALUA (282) 1 2 3 4
+    SIENDO (283) 2 4
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (29)
+        on left: 0
+    S (30)
+        on left: 1 2 3 4
+        on right: 0
+    IF_ST <valor> (31)
+        on left: 5 6
+        on right: 3 4
+    LDs (32)
+        on left: 7 8
+        on right: 2 4 7
+    D (33)
+        on left: 10 15
+        on right: 7 8
+    $@1 (34)
+        on left: 9
+        on right: 10
+    $@2 (35)
+        on left: 11
+        on right: 15
+    $@3 (36)
+        on left: 12
+        on right: 15
+    $@4 (37)
+        on left: 13
+        on right: 15
+    $@5 (38)
+        on left: 14
+        on right: 15
+    COND <condicion> (39)
+        on left: 16 17 18 19 20 21 22
+        on right: 5 6
+    E0 <valor> (40)
+        on left: 23 24 25
+        on right: 1 2 5 6 10 15 16 17 18 19 20 21 22 23 24 33
+    E1 <valor> (41)
+        on left: 26 27 28
+        on right: 23 24 25 26 27
+    E2 <valor> (42)
+        on left: 29 30 31 32 33
+        on right: 26 27 28
+
+
+Estado 0
+
+    0 $accept: . S $end
+
+    EVALUA  desplazar e ir al estado 1
+    SIENDO  desplazar e ir al estado 2
+
+    S  ir al estado 3
+
+
+Estado 1
+
+    1 S: EVALUA . E0 PTOCOMA
+    3  | EVALUA . IF_ST PTOCOMA
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    IF    desplazar e ir al estado 8
+    ID    desplazar e ir al estado 9
+
+    IF_ST  ir al estado 10
+    E0     ir al estado 11
+    E1     ir al estado 12
+    E2     ir al estado 13
+
+
+Estado 2
+
+    2 S: SIENDO . LDs EVALUA E0
+    4  | SIENDO . LDs EVALUA IF_ST
+
+    LT  desplazar e ir al estado 14
+    ID  desplazar e ir al estado 15
+
+    LDs  ir al estado 16
+    D    ir al estado 17
+
+
+Estado 3
+
+    0 $accept: S . $end
+
+    $end  desplazar e ir al estado 18
+
+
+Estado 4
+
+   29 E2: INT .
+
+    $default  reduce usando la regla 29 (E2)
+
+
+Estado 5
+
+   30 E2: REAL .
+
+    $default  reduce usando la regla 30 (E2)
+
+
+Estado 6
+
+   31 E2: EXP .
+
+    $default  reduce usando la regla 31 (E2)
+
+
+Estado 7
+
+   33 E2: PA . E0 PC
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 19
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 8
+
+    5 IF_ST: IF . PA COND PA THEN PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF . PA COND PA THEN PCA E0 PCC
+
+    PA  desplazar e ir al estado 20
+
+
+Estado 9
+
+   32 E2: ID .
+
+    $default  reduce usando la regla 32 (E2)
+
+
+Estado 10
+
+    3 S: EVALUA IF_ST . PTOCOMA
+
+    PTOCOMA  desplazar e ir al estado 21
+
+
+Estado 11
+
+    1 S: EVALUA E0 . PTOCOMA
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    PTOCOMA  desplazar e ir al estado 22
+    MAS      desplazar e ir al estado 23
+    MENOS    desplazar e ir al estado 24
+
+
+Estado 12
+
+   25 E0: E1 .
+   26 E1: E1 . MULT E2
+   27   | E1 . DIV E2
+
+    MULT  desplazar e ir al estado 25
+    DIV   desplazar e ir al estado 26
+
+    $default  reduce usando la regla 25 (E0)
+
+
+Estado 13
+
+   28 E1: E2 .
+
+    $default  reduce usando la regla 28 (E1)
+
+
+Estado 14
+
+   15 D: LT . ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    ID  desplazar e ir al estado 27
+
+
+Estado 15
+
+   10 D: ID . $@1 ASIG E0
+
+    $default  reduce usando la regla 9 ($@1)
+
+    $@1  ir al estado 28
+
+
+Estado 16
+
+    2 S: SIENDO LDs . EVALUA E0
+    4  | SIENDO LDs . EVALUA IF_ST
+    7 LDs: LDs . COMA D
+
+    COMA    desplazar e ir al estado 29
+    EVALUA  desplazar e ir al estado 30
+
+
+Estado 17
+
+    8 LDs: D .
+
+    $default  reduce usando la regla 8 (LDs)
+
+
+Estado 18
+
+    0 $accept: S $end .
+
+    $default  aceptar
+
+
+Estado 19
+
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+   33 E2: PA E0 . PC
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+    PC     desplazar e ir al estado 31
+
+
+Estado 20
+
+    5 IF_ST: IF PA . COND PA THEN PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF PA . COND PA THEN PCA E0 PCC
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    COND  ir al estado 32
+    E0    ir al estado 33
+    E1    ir al estado 12
+    E2    ir al estado 13
+
+
+Estado 21
+
+    3 S: EVALUA IF_ST PTOCOMA .
+
+    $default  reduce usando la regla 3 (S)
+
+
+Estado 22
+
+    1 S: EVALUA E0 PTOCOMA .
+
+    $default  reduce usando la regla 1 (S)
+
+
+Estado 23
+
+   23 E0: E0 MAS . E1
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E1  ir al estado 34
+    E2  ir al estado 13
+
+
+Estado 24
+
+   24 E0: E0 MENOS . E1
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E1  ir al estado 35
+    E2  ir al estado 13
+
+
+Estado 25
+
+   26 E1: E1 MULT . E2
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E2  ir al estado 36
+
+
+Estado 26
+
+   27 E1: E1 DIV . E2
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E2  ir al estado 37
+
+
+Estado 27
+
+   15 D: LT ID . $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    $default  reduce usando la regla 11 ($@2)
+
+    $@2  ir al estado 38
+
+
+Estado 28
+
+   10 D: ID $@1 . ASIG E0
+
+    ASIG  desplazar e ir al estado 39
+
+
+Estado 29
+
+    7 LDs: LDs COMA . D
+
+    LT  desplazar e ir al estado 14
+    ID  desplazar e ir al estado 15
+
+    D  ir al estado 40
+
+
+Estado 30
+
+    2 S: SIENDO LDs EVALUA . E0
+    4  | SIENDO LDs EVALUA . IF_ST
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    IF    desplazar e ir al estado 8
+    ID    desplazar e ir al estado 9
+
+    IF_ST  ir al estado 41
+    E0     ir al estado 42
+    E1     ir al estado 12
+    E2     ir al estado 13
+
+
+Estado 31
+
+   33 E2: PA E0 PC .
+
+    $default  reduce usando la regla 33 (E2)
+
+
+Estado 32
+
+    5 IF_ST: IF PA COND . PA THEN PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF PA COND . PA THEN PCA E0 PCC
+
+    PA  desplazar e ir al estado 43
+
+
+Estado 33
+
+   16 COND: E0 . LTE E0
+   17     | E0 . GTE E0
+   18     | E0 . EQ E0
+   19     | E0 . DIF E0
+   20     | E0 . GT E0
+   21     | E0 . LT E0
+   22     | E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+    LT     desplazar e ir al estado 44
+    GT     desplazar e ir al estado 45
+    LTE    desplazar e ir al estado 46
+    GTE    desplazar e ir al estado 47
+    EQ     desplazar e ir al estado 48
+    DIF    desplazar e ir al estado 49
+
+    $default  reduce usando la regla 22 (COND)
+
+
+Estado 34
+
+   23 E0: E0 MAS E1 .
+   26 E1: E1 . MULT E2
+   27   | E1 . DIV E2
+
+    MULT  desplazar e ir al estado 25
+    DIV   desplazar e ir al estado 26
+
+    $default  reduce usando la regla 23 (E0)
+
+
+Estado 35
+
+   24 E0: E0 MENOS E1 .
+   26 E1: E1 . MULT E2
+   27   | E1 . DIV E2
+
+    MULT  desplazar e ir al estado 25
+    DIV   desplazar e ir al estado 26
+
+    $default  reduce usando la regla 24 (E0)
+
+
+Estado 36
+
+   26 E1: E1 MULT E2 .
+
+    $default  reduce usando la regla 26 (E1)
+
+
+Estado 37
+
+   27 E1: E1 DIV E2 .
+
+    $default  reduce usando la regla 27 (E1)
+
+
+Estado 38
+
+   15 D: LT ID $@2 . COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    COMA  desplazar e ir al estado 50
+
+
+Estado 39
+
+   10 D: ID $@1 ASIG . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 51
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 40
+
+    7 LDs: LDs COMA D .
+
+    $default  reduce usando la regla 7 (LDs)
+
+
+Estado 41
+
+    4 S: SIENDO LDs EVALUA IF_ST .
+
+    $default  reduce usando la regla 4 (S)
+
+
+Estado 42
+
+    2 S: SIENDO LDs EVALUA E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 2 (S)
+
+
+Estado 43
+
+    5 IF_ST: IF PA COND PA . THEN PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF PA COND PA . THEN PCA E0 PCC
+
+    THEN  desplazar e ir al estado 52
+
+
+Estado 44
+
+   21 COND: E0 LT . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 53
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 45
+
+   20 COND: E0 GT . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 54
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 46
+
+   16 COND: E0 LTE . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 55
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 47
+
+   17 COND: E0 GTE . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 56
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 48
+
+   18 COND: E0 EQ . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 57
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 49
+
+   19 COND: E0 DIF . E0
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 58
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 50
+
+   15 D: LT ID $@2 COMA . ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    ID  desplazar e ir al estado 59
+
+
+Estado 51
+
+   10 D: ID $@1 ASIG E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 10 (D)
+
+
+Estado 52
+
+    5 IF_ST: IF PA COND PA THEN . PCA E0 PCC ELSE PCA E0 PCC
+    6      | IF PA COND PA THEN . PCA E0 PCC
+
+    PCA  desplazar e ir al estado 60
+
+
+Estado 53
+
+   21 COND: E0 LT E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 21 (COND)
+
+
+Estado 54
+
+   20 COND: E0 GT E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 20 (COND)
+
+
+Estado 55
+
+   16 COND: E0 LTE E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 16 (COND)
+
+
+Estado 56
+
+   17 COND: E0 GTE E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 17 (COND)
+
+
+Estado 57
+
+   18 COND: E0 EQ E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 18 (COND)
+
+
+Estado 58
+
+   19 COND: E0 DIF E0 .
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 19 (COND)
+
+
+Estado 59
+
+   15 D: LT ID $@2 COMA ID . $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    $default  reduce usando la regla 12 ($@3)
+
+    $@3  ir al estado 61
+
+
+Estado 60
+
+    5 IF_ST: IF PA COND PA THEN PCA . E0 PCC ELSE PCA E0 PCC
+    6      | IF PA COND PA THEN PCA . E0 PCC
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 62
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 61
+
+   15 D: LT ID $@2 COMA ID $@3 . GT ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    GT  desplazar e ir al estado 63
+
+
+Estado 62
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 . PCC ELSE PCA E0 PCC
+    6      | IF PA COND PA THEN PCA E0 . PCC
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+    PCC    desplazar e ir al estado 64
+
+
+Estado 63
+
+   15 D: LT ID $@2 COMA ID $@3 GT . ASIG LT E0 $@4 COMA E0 $@5 GT
+
+    ASIG  desplazar e ir al estado 65
+
+
+Estado 64
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC . ELSE PCA E0 PCC
+    6      | IF PA COND PA THEN PCA E0 PCC .
+
+    ELSE  desplazar e ir al estado 66
+
+    $default  reduce usando la regla 6 (IF_ST)
+
+
+Estado 65
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG . LT E0 $@4 COMA E0 $@5 GT
+
+    LT  desplazar e ir al estado 67
+
+
+Estado 66
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC ELSE . PCA E0 PCC
+
+    PCA  desplazar e ir al estado 68
+
+
+Estado 67
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT . E0 $@4 COMA E0 $@5 GT
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 69
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 68
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC ELSE PCA . E0 PCC
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 70
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 69
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 . $@4 COMA E0 $@5 GT
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 13 ($@4)
+
+    $@4  ir al estado 71
+
+
+Estado 70
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC ELSE PCA E0 . PCC
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+    PCC    desplazar e ir al estado 72
+
+
+Estado 71
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 . COMA E0 $@5 GT
+
+    COMA  desplazar e ir al estado 73
+
+
+Estado 72
+
+    5 IF_ST: IF PA COND PA THEN PCA E0 PCC ELSE PCA E0 PCC .
+
+    $default  reduce usando la regla 5 (IF_ST)
+
+
+Estado 73
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA . E0 $@5 GT
+
+    INT   desplazar e ir al estado 4
+    REAL  desplazar e ir al estado 5
+    EXP   desplazar e ir al estado 6
+    PA    desplazar e ir al estado 7
+    ID    desplazar e ir al estado 9
+
+    E0  ir al estado 74
+    E1  ir al estado 12
+    E2  ir al estado 13
+
+
+Estado 74
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 . $@5 GT
+   23 E0: E0 . MAS E1
+   24   | E0 . MENOS E1
+
+    MAS    desplazar e ir al estado 23
+    MENOS  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 14 ($@5)
+
+    $@5  ir al estado 75
+
+
+Estado 75
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 . GT
+
+    GT  desplazar e ir al estado 76
+
+
+Estado 76
+
+   15 D: LT ID $@2 COMA ID $@3 GT ASIG LT E0 $@4 COMA E0 $@5 GT .
+
+    $default  reduce usando la regla 15 (D)

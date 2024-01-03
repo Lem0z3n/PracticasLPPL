@@ -1,0 +1,1376 @@
+Estado 1 conflictos: 1 desplazamiento/reducción
+Estado 102 conflictos: 2 desplazamiento/reducción
+Estado 103 conflictos: 2 desplazamiento/reducción
+
+
+Gramática
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input line
+
+    3 line: '\n'
+    4     | sentencia '\n'
+    5     | func '\n'
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+    7     | PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+    8     | PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    9 exp: ENTERO
+   10    | IDENT
+   11    | exp '+' exp
+   12    | exp '-' exp
+   13    | exp '*' exp
+   14    | exp '/' exp
+
+   15 ins: %empty
+   16    | asignacion ins
+   17    | condicional ins
+   18    | iteracion ins
+
+   19 asignacion: IDENT ASIG exp PCOMA
+
+   20 condicional: PRSI PARIZ condicion PARDER PRENTONCES LLIZ ins LLDE
+
+   21 condicion: condicion '&' condicion
+   22          | condicion '|' condicion
+   23          | NEG PARIZ condicion PARDER
+   24          | IDENT '<' exp
+   25          | IDENT '>' exp
+   26          | IDENT '=' exp
+   27          | IDENT '!' exp
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER PRHACER LLIZ ins LLDE
+
+   29 sentencia: declaracion ins
+
+   30 declaracion: %empty
+   31            | PRENTERO IDENT PCOMA declaracion
+   32            | PRREAL IDENT PCOMA declaracion
+   33            | PRBOOLEANO IDENT PCOMA declaracion
+   34            | estructura IDENT PCOMA declaracion
+   35            | PRCONSTANTE PRENTERO IDENT ASIG ENTERO PCOMA declaracion
+   36            | PRCONSTANTE PRREAL IDENT ASIG REAL PCOMA declaracion
+
+   37 estructura: PRESTRUCTURA IDENT LLIZ declaracion LLDE
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    '\n' (10) 3 4 5
+    '!' (33) 27
+    '&' (38) 21
+    '*' (42) 13
+    '+' (43) 11
+    '-' (45) 12
+    '/' (47) 14
+    '<' (60) 24
+    '=' (61) 26
+    '>' (62) 25
+    '|' (124) 22
+    error (256)
+    ENTERO (258) 9 35
+    REAL (259) 36
+    IDENT (260) 6 7 8 10 19 24 25 26 27 31 32 33 34 35 36 37
+    ASIG (261) 19 35 36
+    PCOMA (262) 19 31 32 33 34 35 36
+    PARIZ (263) 6 7 8 20 23 28
+    PARDER (264) 6 7 8 20 23 28
+    PRSI (265) 20
+    PRENTONCES (266) 20
+    LLIZ (267) 6 7 8 20 28 37
+    LLDE (268) 6 7 8 20 28 37
+    PRMIENTRAS (269) 28
+    PRHACER (270) 28
+    NEG (271) 23
+    PRENTERO (272) 6 31 35
+    PRREAL (273) 7 32 36
+    PRBOOLEANO (274) 8 33
+    PRESTRUCTURA (275) 37
+    PRFUNCION (276) 6 7 8
+    PRRETORNA (277) 6 7 8
+    PRCONSTANTE (278) 35 36
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (35)
+        on left: 0
+    input (36)
+        on left: 1 2
+        on right: 0 2
+    line (37)
+        on left: 3 4 5
+        on right: 2
+    func (38)
+        on left: 6 7 8
+        on right: 5
+    exp (39)
+        on left: 9 10 11 12 13 14
+        on right: 11 12 13 14 19 24 25 26 27
+    ins (40)
+        on left: 15 16 17 18
+        on right: 6 7 8 16 17 18 20 28 29
+    asignacion (41)
+        on left: 19
+        on right: 16
+    condicional (42)
+        on left: 20
+        on right: 17
+    condicion (43)
+        on left: 21 22 23 24 25 26 27
+        on right: 20 21 22 23 28
+    iteracion (44)
+        on left: 28
+        on right: 18
+    sentencia (45)
+        on left: 29
+        on right: 4
+    declaracion (46)
+        on left: 30 31 32 33 34 35 36
+        on right: 6 7 8 29 31 32 33 34 35 36 37
+    estructura (47)
+        on left: 37
+        on right: 34
+
+
+Estado 0
+
+    0 $accept: . input $end
+
+    $default  reduce usando la regla 1 (input)
+
+    input  ir al estado 1
+
+
+Estado 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end          desplazar e ir al estado 2
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRFUNCION     desplazar e ir al estado 7
+    PRCONSTANTE   desplazar e ir al estado 8
+    '\n'          desplazar e ir al estado 9
+
+    '\n'      [reduce usando la regla 30 (declaracion)]
+    $default  reduce usando la regla 30 (declaracion)
+
+    line         ir al estado 10
+    func         ir al estado 11
+    sentencia    ir al estado 12
+    declaracion  ir al estado 13
+    estructura   ir al estado 14
+
+
+Estado 2
+
+    0 $accept: input $end .
+
+    $default  aceptar
+
+
+Estado 3
+
+   31 declaracion: PRENTERO . IDENT PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 15
+
+
+Estado 4
+
+   32 declaracion: PRREAL . IDENT PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 16
+
+
+Estado 5
+
+   33 declaracion: PRBOOLEANO . IDENT PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 17
+
+
+Estado 6
+
+   37 estructura: PRESTRUCTURA . IDENT LLIZ declaracion LLDE
+
+    IDENT  desplazar e ir al estado 18
+
+
+Estado 7
+
+    6 func: PRFUNCION . PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+    7     | PRFUNCION . PRREAL IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+    8     | PRFUNCION . PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PRENTERO    desplazar e ir al estado 19
+    PRREAL      desplazar e ir al estado 20
+    PRBOOLEANO  desplazar e ir al estado 21
+
+
+Estado 8
+
+   35 declaracion: PRCONSTANTE . PRENTERO IDENT ASIG ENTERO PCOMA declaracion
+   36            | PRCONSTANTE . PRREAL IDENT ASIG REAL PCOMA declaracion
+
+    PRENTERO  desplazar e ir al estado 22
+    PRREAL    desplazar e ir al estado 23
+
+
+Estado 9
+
+    3 line: '\n' .
+
+    $default  reduce usando la regla 3 (line)
+
+
+Estado 10
+
+    2 input: input line .
+
+    $default  reduce usando la regla 2 (input)
+
+
+Estado 11
+
+    5 line: func . '\n'
+
+    '\n'  desplazar e ir al estado 24
+
+
+Estado 12
+
+    4 line: sentencia . '\n'
+
+    '\n'  desplazar e ir al estado 25
+
+
+Estado 13
+
+   29 sentencia: declaracion . ins
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 29
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 14
+
+   34 declaracion: estructura . IDENT PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 33
+
+
+Estado 15
+
+   31 declaracion: PRENTERO IDENT . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 34
+
+
+Estado 16
+
+   32 declaracion: PRREAL IDENT . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 35
+
+
+Estado 17
+
+   33 declaracion: PRBOOLEANO IDENT . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 36
+
+
+Estado 18
+
+   37 estructura: PRESTRUCTURA IDENT . LLIZ declaracion LLDE
+
+    LLIZ  desplazar e ir al estado 37
+
+
+Estado 19
+
+    6 func: PRFUNCION PRENTERO . IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    IDENT  desplazar e ir al estado 38
+
+
+Estado 20
+
+    7 func: PRFUNCION PRREAL . IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    IDENT  desplazar e ir al estado 39
+
+
+Estado 21
+
+    8 func: PRFUNCION PRBOOLEANO . IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    IDENT  desplazar e ir al estado 40
+
+
+Estado 22
+
+   35 declaracion: PRCONSTANTE PRENTERO . IDENT ASIG ENTERO PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 41
+
+
+Estado 23
+
+   36 declaracion: PRCONSTANTE PRREAL . IDENT ASIG REAL PCOMA declaracion
+
+    IDENT  desplazar e ir al estado 42
+
+
+Estado 24
+
+    5 line: func '\n' .
+
+    $default  reduce usando la regla 5 (line)
+
+
+Estado 25
+
+    4 line: sentencia '\n' .
+
+    $default  reduce usando la regla 4 (line)
+
+
+Estado 26
+
+   19 asignacion: IDENT . ASIG exp PCOMA
+
+    ASIG  desplazar e ir al estado 43
+
+
+Estado 27
+
+   20 condicional: PRSI . PARIZ condicion PARDER PRENTONCES LLIZ ins LLDE
+
+    PARIZ  desplazar e ir al estado 44
+
+
+Estado 28
+
+   28 iteracion: PRMIENTRAS . PARIZ condicion PARDER PRHACER LLIZ ins LLDE
+
+    PARIZ  desplazar e ir al estado 45
+
+
+Estado 29
+
+   29 sentencia: declaracion ins .
+
+    $default  reduce usando la regla 29 (sentencia)
+
+
+Estado 30
+
+   16 ins: asignacion . ins
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 46
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 31
+
+   17 ins: condicional . ins
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 47
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 32
+
+   18 ins: iteracion . ins
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 48
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 33
+
+   34 declaracion: estructura IDENT . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 49
+
+
+Estado 34
+
+   31 declaracion: PRENTERO IDENT PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 50
+    estructura   ir al estado 14
+
+
+Estado 35
+
+   32 declaracion: PRREAL IDENT PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 51
+    estructura   ir al estado 14
+
+
+Estado 36
+
+   33 declaracion: PRBOOLEANO IDENT PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 52
+    estructura   ir al estado 14
+
+
+Estado 37
+
+   37 estructura: PRESTRUCTURA IDENT LLIZ . declaracion LLDE
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 53
+    estructura   ir al estado 14
+
+
+Estado 38
+
+    6 func: PRFUNCION PRENTERO IDENT . PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARIZ  desplazar e ir al estado 54
+
+
+Estado 39
+
+    7 func: PRFUNCION PRREAL IDENT . PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARIZ  desplazar e ir al estado 55
+
+
+Estado 40
+
+    8 func: PRFUNCION PRBOOLEANO IDENT . PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARIZ  desplazar e ir al estado 56
+
+
+Estado 41
+
+   35 declaracion: PRCONSTANTE PRENTERO IDENT . ASIG ENTERO PCOMA declaracion
+
+    ASIG  desplazar e ir al estado 57
+
+
+Estado 42
+
+   36 declaracion: PRCONSTANTE PRREAL IDENT . ASIG REAL PCOMA declaracion
+
+    ASIG  desplazar e ir al estado 58
+
+
+Estado 43
+
+   19 asignacion: IDENT ASIG . exp PCOMA
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 61
+
+
+Estado 44
+
+   20 condicional: PRSI PARIZ . condicion PARDER PRENTONCES LLIZ ins LLDE
+
+    IDENT  desplazar e ir al estado 62
+    NEG    desplazar e ir al estado 63
+
+    condicion  ir al estado 64
+
+
+Estado 45
+
+   28 iteracion: PRMIENTRAS PARIZ . condicion PARDER PRHACER LLIZ ins LLDE
+
+    IDENT  desplazar e ir al estado 62
+    NEG    desplazar e ir al estado 63
+
+    condicion  ir al estado 65
+
+
+Estado 46
+
+   16 ins: asignacion ins .
+
+    $default  reduce usando la regla 16 (ins)
+
+
+Estado 47
+
+   17 ins: condicional ins .
+
+    $default  reduce usando la regla 17 (ins)
+
+
+Estado 48
+
+   18 ins: iteracion ins .
+
+    $default  reduce usando la regla 18 (ins)
+
+
+Estado 49
+
+   34 declaracion: estructura IDENT PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 66
+    estructura   ir al estado 14
+
+
+Estado 50
+
+   31 declaracion: PRENTERO IDENT PCOMA declaracion .
+
+    $default  reduce usando la regla 31 (declaracion)
+
+
+Estado 51
+
+   32 declaracion: PRREAL IDENT PCOMA declaracion .
+
+    $default  reduce usando la regla 32 (declaracion)
+
+
+Estado 52
+
+   33 declaracion: PRBOOLEANO IDENT PCOMA declaracion .
+
+    $default  reduce usando la regla 33 (declaracion)
+
+
+Estado 53
+
+   37 estructura: PRESTRUCTURA IDENT LLIZ declaracion . LLDE
+
+    LLDE  desplazar e ir al estado 67
+
+
+Estado 54
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ . declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 68
+    estructura   ir al estado 14
+
+
+Estado 55
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ . declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 69
+    estructura   ir al estado 14
+
+
+Estado 56
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ . declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 70
+    estructura   ir al estado 14
+
+
+Estado 57
+
+   35 declaracion: PRCONSTANTE PRENTERO IDENT ASIG . ENTERO PCOMA declaracion
+
+    ENTERO  desplazar e ir al estado 71
+
+
+Estado 58
+
+   36 declaracion: PRCONSTANTE PRREAL IDENT ASIG . REAL PCOMA declaracion
+
+    REAL  desplazar e ir al estado 72
+
+
+Estado 59
+
+    9 exp: ENTERO .
+
+    $default  reduce usando la regla 9 (exp)
+
+
+Estado 60
+
+   10 exp: IDENT .
+
+    $default  reduce usando la regla 10 (exp)
+
+
+Estado 61
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   19 asignacion: IDENT ASIG exp . PCOMA
+
+    PCOMA  desplazar e ir al estado 73
+    '-'    desplazar e ir al estado 74
+    '+'    desplazar e ir al estado 75
+    '*'    desplazar e ir al estado 76
+    '/'    desplazar e ir al estado 77
+
+
+Estado 62
+
+   24 condicion: IDENT . '<' exp
+   25          | IDENT . '>' exp
+   26          | IDENT . '=' exp
+   27          | IDENT . '!' exp
+
+    '<'  desplazar e ir al estado 78
+    '>'  desplazar e ir al estado 79
+    '='  desplazar e ir al estado 80
+    '!'  desplazar e ir al estado 81
+
+
+Estado 63
+
+   23 condicion: NEG . PARIZ condicion PARDER
+
+    PARIZ  desplazar e ir al estado 82
+
+
+Estado 64
+
+   20 condicional: PRSI PARIZ condicion . PARDER PRENTONCES LLIZ ins LLDE
+   21 condicion: condicion . '&' condicion
+   22          | condicion . '|' condicion
+
+    PARDER  desplazar e ir al estado 83
+    '&'     desplazar e ir al estado 84
+    '|'     desplazar e ir al estado 85
+
+
+Estado 65
+
+   21 condicion: condicion . '&' condicion
+   22          | condicion . '|' condicion
+   28 iteracion: PRMIENTRAS PARIZ condicion . PARDER PRHACER LLIZ ins LLDE
+
+    PARDER  desplazar e ir al estado 86
+    '&'     desplazar e ir al estado 84
+    '|'     desplazar e ir al estado 85
+
+
+Estado 66
+
+   34 declaracion: estructura IDENT PCOMA declaracion .
+
+    $default  reduce usando la regla 34 (declaracion)
+
+
+Estado 67
+
+   37 estructura: PRESTRUCTURA IDENT LLIZ declaracion LLDE .
+
+    $default  reduce usando la regla 37 (estructura)
+
+
+Estado 68
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion . PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARDER  desplazar e ir al estado 87
+
+
+Estado 69
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion . PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARDER  desplazar e ir al estado 88
+
+
+Estado 70
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion . PARDER LLIZ ins PRRETORNA IDENT LLDE
+
+    PARDER  desplazar e ir al estado 89
+
+
+Estado 71
+
+   35 declaracion: PRCONSTANTE PRENTERO IDENT ASIG ENTERO . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 90
+
+
+Estado 72
+
+   36 declaracion: PRCONSTANTE PRREAL IDENT ASIG REAL . PCOMA declaracion
+
+    PCOMA  desplazar e ir al estado 91
+
+
+Estado 73
+
+   19 asignacion: IDENT ASIG exp PCOMA .
+
+    $default  reduce usando la regla 19 (asignacion)
+
+
+Estado 74
+
+   12 exp: exp '-' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 92
+
+
+Estado 75
+
+   11 exp: exp '+' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 93
+
+
+Estado 76
+
+   13 exp: exp '*' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 94
+
+
+Estado 77
+
+   14 exp: exp '/' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 95
+
+
+Estado 78
+
+   24 condicion: IDENT '<' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 96
+
+
+Estado 79
+
+   25 condicion: IDENT '>' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 97
+
+
+Estado 80
+
+   26 condicion: IDENT '=' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 98
+
+
+Estado 81
+
+   27 condicion: IDENT '!' . exp
+
+    ENTERO  desplazar e ir al estado 59
+    IDENT   desplazar e ir al estado 60
+
+    exp  ir al estado 99
+
+
+Estado 82
+
+   23 condicion: NEG PARIZ . condicion PARDER
+
+    IDENT  desplazar e ir al estado 62
+    NEG    desplazar e ir al estado 63
+
+    condicion  ir al estado 100
+
+
+Estado 83
+
+   20 condicional: PRSI PARIZ condicion PARDER . PRENTONCES LLIZ ins LLDE
+
+    PRENTONCES  desplazar e ir al estado 101
+
+
+Estado 84
+
+   21 condicion: condicion '&' . condicion
+
+    IDENT  desplazar e ir al estado 62
+    NEG    desplazar e ir al estado 63
+
+    condicion  ir al estado 102
+
+
+Estado 85
+
+   22 condicion: condicion '|' . condicion
+
+    IDENT  desplazar e ir al estado 62
+    NEG    desplazar e ir al estado 63
+
+    condicion  ir al estado 103
+
+
+Estado 86
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER . PRHACER LLIZ ins LLDE
+
+    PRHACER  desplazar e ir al estado 104
+
+
+Estado 87
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER . LLIZ ins PRRETORNA IDENT LLDE
+
+    LLIZ  desplazar e ir al estado 105
+
+
+Estado 88
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER . LLIZ ins PRRETORNA IDENT LLDE
+
+    LLIZ  desplazar e ir al estado 106
+
+
+Estado 89
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER . LLIZ ins PRRETORNA IDENT LLDE
+
+    LLIZ  desplazar e ir al estado 107
+
+
+Estado 90
+
+   35 declaracion: PRCONSTANTE PRENTERO IDENT ASIG ENTERO PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 108
+    estructura   ir al estado 14
+
+
+Estado 91
+
+   36 declaracion: PRCONSTANTE PRREAL IDENT ASIG REAL PCOMA . declaracion
+
+    PRENTERO      desplazar e ir al estado 3
+    PRREAL        desplazar e ir al estado 4
+    PRBOOLEANO    desplazar e ir al estado 5
+    PRESTRUCTURA  desplazar e ir al estado 6
+    PRCONSTANTE   desplazar e ir al estado 8
+
+    $default  reduce usando la regla 30 (declaracion)
+
+    declaracion  ir al estado 109
+    estructura   ir al estado 14
+
+
+Estado 92
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   12    | exp '-' exp .
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 12 (exp)
+
+
+Estado 93
+
+   11 exp: exp . '+' exp
+   11    | exp '+' exp .
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 11 (exp)
+
+
+Estado 94
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   13    | exp '*' exp .
+   14    | exp . '/' exp
+
+    $default  reduce usando la regla 13 (exp)
+
+
+Estado 95
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   14    | exp '/' exp .
+
+    $default  reduce usando la regla 14 (exp)
+
+
+Estado 96
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   24 condicion: IDENT '<' exp .
+
+    '-'  desplazar e ir al estado 74
+    '+'  desplazar e ir al estado 75
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 24 (condicion)
+
+
+Estado 97
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   25 condicion: IDENT '>' exp .
+
+    '-'  desplazar e ir al estado 74
+    '+'  desplazar e ir al estado 75
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 25 (condicion)
+
+
+Estado 98
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   26 condicion: IDENT '=' exp .
+
+    '-'  desplazar e ir al estado 74
+    '+'  desplazar e ir al estado 75
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 26 (condicion)
+
+
+Estado 99
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   27 condicion: IDENT '!' exp .
+
+    '-'  desplazar e ir al estado 74
+    '+'  desplazar e ir al estado 75
+    '*'  desplazar e ir al estado 76
+    '/'  desplazar e ir al estado 77
+
+    $default  reduce usando la regla 27 (condicion)
+
+
+Estado 100
+
+   21 condicion: condicion . '&' condicion
+   22          | condicion . '|' condicion
+   23          | NEG PARIZ condicion . PARDER
+
+    PARDER  desplazar e ir al estado 110
+    '&'     desplazar e ir al estado 84
+    '|'     desplazar e ir al estado 85
+
+
+Estado 101
+
+   20 condicional: PRSI PARIZ condicion PARDER PRENTONCES . LLIZ ins LLDE
+
+    LLIZ  desplazar e ir al estado 111
+
+
+Estado 102
+
+   21 condicion: condicion . '&' condicion
+   21          | condicion '&' condicion .
+   22          | condicion . '|' condicion
+
+    '&'  desplazar e ir al estado 84
+    '|'  desplazar e ir al estado 85
+
+    '&'       [reduce usando la regla 21 (condicion)]
+    '|'       [reduce usando la regla 21 (condicion)]
+    $default  reduce usando la regla 21 (condicion)
+
+
+Estado 103
+
+   21 condicion: condicion . '&' condicion
+   22          | condicion . '|' condicion
+   22          | condicion '|' condicion .
+
+    '&'  desplazar e ir al estado 84
+    '|'  desplazar e ir al estado 85
+
+    '&'       [reduce usando la regla 22 (condicion)]
+    '|'       [reduce usando la regla 22 (condicion)]
+    $default  reduce usando la regla 22 (condicion)
+
+
+Estado 104
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER PRHACER . LLIZ ins LLDE
+
+    LLIZ  desplazar e ir al estado 112
+
+
+Estado 105
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ . ins PRRETORNA IDENT LLDE
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 113
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 106
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ . ins PRRETORNA IDENT LLDE
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 114
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 107
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ . ins PRRETORNA IDENT LLDE
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 115
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 108
+
+   35 declaracion: PRCONSTANTE PRENTERO IDENT ASIG ENTERO PCOMA declaracion .
+
+    $default  reduce usando la regla 35 (declaracion)
+
+
+Estado 109
+
+   36 declaracion: PRCONSTANTE PRREAL IDENT ASIG REAL PCOMA declaracion .
+
+    $default  reduce usando la regla 36 (declaracion)
+
+
+Estado 110
+
+   23 condicion: NEG PARIZ condicion PARDER .
+
+    $default  reduce usando la regla 23 (condicion)
+
+
+Estado 111
+
+   20 condicional: PRSI PARIZ condicion PARDER PRENTONCES LLIZ . ins LLDE
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 116
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 112
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER PRHACER LLIZ . ins LLDE
+
+    IDENT       desplazar e ir al estado 26
+    PRSI        desplazar e ir al estado 27
+    PRMIENTRAS  desplazar e ir al estado 28
+
+    $default  reduce usando la regla 15 (ins)
+
+    ins          ir al estado 117
+    asignacion   ir al estado 30
+    condicional  ir al estado 31
+    iteracion    ir al estado 32
+
+
+Estado 113
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins . PRRETORNA IDENT LLDE
+
+    PRRETORNA  desplazar e ir al estado 118
+
+
+Estado 114
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ ins . PRRETORNA IDENT LLDE
+
+    PRRETORNA  desplazar e ir al estado 119
+
+
+Estado 115
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins . PRRETORNA IDENT LLDE
+
+    PRRETORNA  desplazar e ir al estado 120
+
+
+Estado 116
+
+   20 condicional: PRSI PARIZ condicion PARDER PRENTONCES LLIZ ins . LLDE
+
+    LLDE  desplazar e ir al estado 121
+
+
+Estado 117
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER PRHACER LLIZ ins . LLDE
+
+    LLDE  desplazar e ir al estado 122
+
+
+Estado 118
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA . IDENT LLDE
+
+    IDENT  desplazar e ir al estado 123
+
+
+Estado 119
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA . IDENT LLDE
+
+    IDENT  desplazar e ir al estado 124
+
+
+Estado 120
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA . IDENT LLDE
+
+    IDENT  desplazar e ir al estado 125
+
+
+Estado 121
+
+   20 condicional: PRSI PARIZ condicion PARDER PRENTONCES LLIZ ins LLDE .
+
+    $default  reduce usando la regla 20 (condicional)
+
+
+Estado 122
+
+   28 iteracion: PRMIENTRAS PARIZ condicion PARDER PRHACER LLIZ ins LLDE .
+
+    $default  reduce usando la regla 28 (iteracion)
+
+
+Estado 123
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT . LLDE
+
+    LLDE  desplazar e ir al estado 126
+
+
+Estado 124
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT . LLDE
+
+    LLDE  desplazar e ir al estado 127
+
+
+Estado 125
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT . LLDE
+
+    LLDE  desplazar e ir al estado 128
+
+
+Estado 126
+
+    6 func: PRFUNCION PRENTERO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE .
+
+    $default  reduce usando la regla 6 (func)
+
+
+Estado 127
+
+    7 func: PRFUNCION PRREAL IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE .
+
+    $default  reduce usando la regla 7 (func)
+
+
+Estado 128
+
+    8 func: PRFUNCION PRBOOLEANO IDENT PARIZ declaracion PARDER LLIZ ins PRRETORNA IDENT LLDE .
+
+    $default  reduce usando la regla 8 (func)

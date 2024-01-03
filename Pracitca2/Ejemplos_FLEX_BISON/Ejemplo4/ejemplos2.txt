@@ -1,0 +1,30 @@
+x = 4 ; y = 5 ;
+
+si (x >= 0) entonces { x = x - 1 ; }
+
+si (no (x < 0))  entonces { x = x + 1 ; y = x + y ; }
+
+si (x < 0)  entonces { x = x + 1 ; si (x >= 0) entonces { x = x - 1 ; } }
+
+x = 0 ; mientras (x >= 0) hacer { x = x - 1 ; }
+
+mientras (x>= 0 && y < 0) hacer { x = x - 1 ; y = y + 1 ; }
+
+mientras (x>= 0 && y < 0) hacer { si ( no (x >= 0 || y <= 0) ) entonces { y = x + y ; } x = x - 1 ; }
+
+x = 9 ; y = 0 ;
+mientras (x >= 0) hacer { si (y <= 2) entonces { y = y + 1 ; } x = x - 1 ; }
+y = x + y ;
+
+ent x ; x = x + 3 ;
+
+real y ;
+ent x ;
+x = x + y ;
+
+estr alumno { ent enum ; real rnum ; bool enum ; } est ; x = x + 1 ;
+
+func ent suma ( ent num ; ent c ; ) { num = num + c ; dev num }
+
+const ent x = 3 ;
+const real x = 3.14 ;
